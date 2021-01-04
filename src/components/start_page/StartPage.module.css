@@ -11,6 +11,7 @@
           justify-content: center;
   min-height: 100vh;
   background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20320%20568%22%20fill%3D%22none%22%20preserveAspectRatio%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M320%200V568H0L320%200Z%22%20fill%3D%22%23FFF3EB%22%2F%3E%3C%2Fsvg%3E");
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: 50% 0;
 }
@@ -59,7 +60,7 @@
 }
 
 @media screen and (orientation: portrait) {
-  .landscape-content {
+  .content_landscape {
     display: none !important;
   }
   .content {
@@ -110,7 +111,7 @@
 }
 
 @media screen and (orientation: landscape) {
-  .portrait-content {
+  .content_portrait {
     display: none !important;
   }
   .content {
@@ -129,7 +130,7 @@
     -ms-grid-column: 1;
     -ms-grid-column-span: 1;
     grid-column: 1 / 2;
-    width: 80%;
+    width: 74%;
     margin-right: 8%;
     -ms-grid-column-align: right;
         justify-self: right;

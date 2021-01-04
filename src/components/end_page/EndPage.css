@@ -61,7 +61,7 @@
 }
 
 @media screen and (orientation: portrait) {
-  .End-landscape-content {
+  .End-content_landscape {
     display: none !important;
   }
   .End-content {
@@ -116,7 +116,7 @@
 }
 
 @media screen and (orientation: landscape) {
-  .End-portrait-content {
+  .End-content_portrait {
     display: none !important;
   }
   .End-content {

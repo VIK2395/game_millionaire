@@ -195,31 +195,61 @@
   pointer-events: none;
 }
 
+.disabled {
+  pointer-events: none;
+}
+
 .answer-cell.selected .answer-cell__body {
-  stroke: #FF8B37;
-  fill: #FFF3EB;
+  stroke: #ff6a00;
+  stroke-width: 1.5;
+  fill: rgba(255, 223, 154, 0.5);/*#ffe2a2*/
 }
 
 .answer-cell.selected .answer-cell__body ~ path {
-  stroke: #FF8B37;
+  stroke: #ff6a00;
+  stroke-width: 1.5;
 }
 
 .answer-cell.correct .answer-cell__body {
-  stroke: #47D867;
-  fill: #E6FAEA;
+  -webkit-animation-name: blink;
+  animation-name: blink;
+  -webkit-animation-duration: .35s;
+  animation-duration: .35s;
+  -webkit-animation-iteration-count: 3;
+  animation-iteration-count: 3;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .answer-cell.correct .answer-cell__body ~ path {
-  stroke: #47D867;
+  -webkit-animation-name: blink;
+  animation-name: blink;
+  -webkit-animation-duration: .35s;
+  animation-duration: .35s;
+  -webkit-animation-iteration-count: 3;
+  animation-iteration-count: 3;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
-.answer-cell.wrong .answer-cell__body {
-  stroke: #EC6259;
-  fill: #FDEEED;
+@keyframes blink {
+  100% {
+    stroke: #349b4b;
+    stroke-width: 1.5;
+    fill: rgba(0, 255, 13, 0.15);
+  }
 }
 
-.answer-cell.wrong .answer-cell__body ~ path {
-  stroke: #EC6259;
+@-webkit-keyframes blink {
+  100% {
+    stroke: #349b4b;
+    stroke-width: 1.5;
+    fill: rgba(0, 255, 13, 0.15);/*#00ff0d52;*/
+  }
 }
 
 .score {

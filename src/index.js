@@ -3,12 +3,36 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createStore, applyMiddleware} from "redux";
+import thunk from 'redux-thunk';
+import gameReducer from "./store/gameReducer";
+import {Provider, useSelector} from "react-redux";
+import {fetchGameConfigData} from "./store/gameActions";
+
+const store = createStore(gameReducer, applyMiddleware(thunk));
+
+store.dispatch(fetchGameConfigData());
+
+const IsLoaded = ({children}) => {
+    const isLoaded = useSelector(state => state.isLoaded);
+    if (!isLoaded) {
+        return (
+            <div className="loader">
+                <p>Loading...</p>
+            </div>
+        )
+    }
+    return children
+};
+
 
 ReactDOM.render(
-  /*<React.StrictMode>*/
-    <App />
-  /*</React.StrictMode>*/,
-  document.getElementById('root')
+    <Provider store={store}>
+        <IsLoaded>
+            <App />
+        </IsLoaded>
+    </Provider>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

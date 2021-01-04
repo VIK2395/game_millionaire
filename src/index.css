@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: none;
+}
+
 html, body {
   height: 100%;
   width: 100%;
@@ -13,4 +17,14 @@ html, body {
 
 body {
   font-family: "Helvetica Neue", Helvetica,Arial, sans-serif;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  background-color: #F5F5F7;
+  text-align: center;
+  font-size: calc(12px + 3vmin);
 }
