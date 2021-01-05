@@ -13,9 +13,9 @@ const GamePage = ({question, isInitLoad, isInGameEnd}) => {
 		setActiveClass(isActive => !isActive);
 	}
 
-	if (isInitLoad) return <Redirect to="/" />
+	if (isInitLoad) return <Redirect to="/"/>
 
-	if (isInGameEnd) return <Redirect to="/gameover" />
+	if (isInGameEnd) return <Redirect to="/gameover"/>
 
 	return (
 		<div className="wrapper">
@@ -33,23 +33,23 @@ const GamePage = ({question, isInitLoad, isInGameEnd}) => {
 					<p>{question.questionText}</p>
 				</div>
 				<div className="content__answers">
-					<AnswersList />
+					<AnswersList/>
 				</div>
 			</section>
 
-			<section className={`score ${isActive ? "active" : ""}`} >
-				<ScoreList />
+			<section className={`score ${isActive ? "active" : ""}`}>
+				<ScoreList/>
 			</section>
 		</div>
 	)
 }
 
 const mapStateToProps = (state) => {
-    return {
-        question: state.question,
+	return {
+		question: state.question,
 		isInitLoad: state.isInitLoad,
 		isInGameEnd: state.isInGameEnd
-    }
+	}
 };
 
 export default connect(mapStateToProps)(GamePage);

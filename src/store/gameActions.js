@@ -2,6 +2,7 @@ import firebase from "../fbConfig/fbConfig";
 
 export const SET_GAME_CONFIG_DATA = "SET_GAME_CONFIG_DATA";
 export const TOGGLE_IS_LOADED = "TOGGLE_IS_LOADED";
+export const FORM_GAME_QUESTIONS = "BUNDLE_GAME_QUESTIONS";
 
 export const INCREASE_SCORE = "INCREASE_SCORE";
 export const SET_SCORE_QUESTION = "SET_SCORE_QUESTION";
@@ -56,8 +57,8 @@ export const fetchGameConfigData = () => {
                 console.log("No docConfig file in DataBase!")
             }
         }).then(gameConfigData => {
-            dispatch(setGameConfigData(gameConfigData));
-            dispatch(toggleIsLoaded());
+                dispatch(setGameConfigData(gameConfigData));
+                dispatch(toggleIsLoaded());
             }
         ).catch(error => {
             console.log("Back-end database request error: ", error)
@@ -69,6 +70,12 @@ export const setGameConfigData = (data) => {
     return {
         type: SET_GAME_CONFIG_DATA,
         payload: data
+    }
+};
+
+export const formGameQuestions = () => {
+    return {
+        type: FORM_GAME_QUESTIONS
     }
 };
 
@@ -153,7 +160,7 @@ export const scenario = (answerId, history) => {
                         dispatch(setScoreQuestion());
                         dispatch(updateScoreDashboard());
                     }
-                },2000)
+                }, 2000)
             } else {
                 dispatch(showCorrectAnswer());
                 setTimeout(() => {

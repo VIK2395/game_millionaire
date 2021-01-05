@@ -1,25 +1,26 @@
 import {
-    INCREASE_SCORE,
-    SET_SCORE_QUESTION,
-    SET_ANSWER,
-    SET_SELECTED_AND_DISABLED,
-    UPDATE_SCORE_DASHBOARD,
-    SHOW_CORRECT_ANSWER,
-    RESET_SCORE,
-    SET_EARNED,
-    RESET_EARNED,
-    SET_GAME_CONFIG_DATA,
-    TOGGLE_IS_LOADED,
     DISABLE_IS_INIT_LOAD,
+    FORM_GAME_QUESTIONS,
+    INCREASE_SCORE,
+    RESET_EARNED,
+    RESET_SCORE,
+    SET_ANSWER,
+    SET_EARNED,
+    SET_GAME_CONFIG_DATA,
     SET_IS_IN_GAME,
-    SET_IS_IN_GAME_END
+    SET_IS_IN_GAME_END,
+    SET_SCORE_QUESTION,
+    SET_SELECTED_AND_DISABLED,
+    SHOW_CORRECT_ANSWER,
+    TOGGLE_IS_LOADED,
+    UPDATE_SCORE_DASHBOARD
 } from "./gameActions";
 
 
 const initState = {
     isInitLoad: true,
     isLoaded: false,
-    isInGame: false,//!!!!!!
+    isInGame: false,
     isInGameEnd: false,
     score: 500,//null
     earned: 0,//null
@@ -94,6 +95,8 @@ const initState = {
         }
     ],
 
+    gameQuestions: null,
+
     gameConfigData: null
 }
 
@@ -108,7 +111,34 @@ const gameReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoaded: true
+            };
+        case FORM_GAME_QUESTIONS:
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
+        }
+
+            return {
+                ...state,
+                gameQuestions: state.gameConfigData.map(questionPackage => {
+                    const randomIndex = Math.floor(Math.random() * questionPackage.questions.length);
+                    const question = questionPackage.questions[randomIndex];
+                    const deepCopyOfQuestion = {
+                        questionText: question.questionText,
+                        answers: question.answers.map(answer => ({
+                            ...answer
+                        }))
+                    };
+                    shuffle(deepCopyOfQuestion.answers);
+                    return {
+                        questionScore: questionPackage.questionScore,
+                        question: deepCopyOfQuestion
+                    }
+                })
+            };
         case INCREASE_SCORE:
             return {
                 ...state,
@@ -117,7 +147,7 @@ const gameReducer = (state = initState, action) => {
         case SET_SCORE_QUESTION:
             return {
                 ...state,
-                question: state.gameConfigData.find(question => question.questionScore === state.score).question
+                question: state.gameQuestions.find(question => question.questionScore === state.score).question
             };
         case SET_ANSWER:
             return {
