@@ -1,26 +1,26 @@
-import React, { useState } from "react"
-import { Redirect } from "react-router-dom"
-import "./GamePage.css"
-import { connect } from "react-redux"
-import ScoreList from "./ScoreList"
-import AnswersList from "./AnswersList"
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import './GamePage.css';
+import { connect } from 'react-redux';
+import ScoreList from './ScoreList';
+import AnswersList from './AnswersList';
 
 const GamePage = ({ question, isInitLoad, isInGameEnd }) => {
-  const [isActive, setActiveClass] = useState(false)
+  const [isActive, setActiveClass] = useState(false);
 
   const toggleActiveClass = () => {
-    setActiveClass((isActive) => !isActive)
-  }
+    setActiveClass((isActive) => !isActive);
+  };
 
-  if (isInitLoad) return <Redirect to="/" />
+  if (isInitLoad) return <Redirect to="/" />;
 
-  if (isInGameEnd) return <Redirect to="/gameover" />
+  if (isInGameEnd) return <Redirect to="/gameover" />;
 
   return (
     <div className="wrapper">
       <header className="header">
         <div
-          className={`header__burger burger ${isActive ? "active" : ""}`}
+          className={`header__burger burger ${isActive ? 'active' : ''}`}
           onClick={toggleActiveClass}
         >
           <div className="burger__body">
@@ -38,19 +38,17 @@ const GamePage = ({ question, isInitLoad, isInGameEnd }) => {
         </div>
       </section>
 
-      <section className={`score ${isActive ? "active" : ""}`}>
+      <section className={`score ${isActive ? 'active' : ''}`}>
         <ScoreList />
       </section>
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => {
-  return {
-    question: state.question,
-    isInitLoad: state.isInitLoad,
-    isInGameEnd: state.isInGameEnd,
-  }
-}
+const mapStateToProps = (state) => ({
+  question: state.question,
+  isInitLoad: state.isInitLoad,
+  isInGameEnd: state.isInGameEnd,
+});
 
-export default connect(mapStateToProps)(GamePage)
+export default connect(mapStateToProps)(GamePage);

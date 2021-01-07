@@ -1,13 +1,13 @@
-import React from "react"
-import { Link, Redirect } from "react-router-dom"
-import { connect } from "react-redux"
-import logoHand from "../../logoHand.svg"
-import "./EndPage.css"
+import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import logoHand from '../../logoHand.svg';
+import './EndPage.css';
 
 const EndPage = ({ earned, isInitLoad, isInGame }) => {
-  if (isInitLoad) return <Redirect to="/" />
+  if (isInitLoad) return <Redirect to="/" />;
 
-  if (isInGame) return <Redirect to="/game" />
+  if (isInGame) return <Redirect to="/game" />;
 
   return (
     <div className="End-wrapper">
@@ -24,7 +24,7 @@ const EndPage = ({ earned, isInitLoad, isInGame }) => {
           <p className="End-content__text">
             <span className="End-content__text-span">Total score:</span>
             <br />
-            {`$${earned.toLocaleString("en-US")} earned`}
+            {`$${earned.toLocaleString('en-US')} earned`}
           </p>
         </div>
         <Link to="/" className="End-content__link-button End-link-button">
@@ -44,7 +44,7 @@ const EndPage = ({ earned, isInitLoad, isInGame }) => {
           <p className="End-content__text">
             <span className="End-content__text-span">Total score:</span>
             <br />
-            {`$${earned.toLocaleString("en-US")} earned`}
+            {`$${earned.toLocaleString('en-US')} earned`}
           </p>
           <Link to="/" className="End-content__link-button End-link-button">
             Try again
@@ -52,15 +52,13 @@ const EndPage = ({ earned, isInitLoad, isInGame }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => {
-  return {
-    earned: state.earned,
-    isInitLoad: state.isInitLoad,
-    isInGame: state.isInGame,
-  }
-}
+const mapStateToProps = (state) => ({
+  earned: state.earned,
+  isInitLoad: state.isInitLoad,
+  isInGame: state.isInGame,
+});
 
-export default connect(mapStateToProps)(EndPage)
+export default connect(mapStateToProps)(EndPage);
