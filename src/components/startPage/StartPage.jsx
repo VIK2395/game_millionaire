@@ -52,8 +52,7 @@ const StartPage = ({
           />
           <p className={s.content__text}>
             Who wants to be
-            <br />
-            a millionaire?
+            <br />a millionaire?
           </p>
         </div>
         <Link
@@ -76,8 +75,7 @@ const StartPage = ({
         <div className={s['content__landscape-block']}>
           <p className={s.content__text}>
             Who wants to be
-            <br />
-            a millionaire?
+            <br />a millionaire?
           </p>
           <Link
             to="/game"

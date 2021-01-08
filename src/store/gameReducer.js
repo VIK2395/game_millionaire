@@ -123,9 +123,7 @@ const gameReducer = (state = initState, action) => {
       return {
         ...state,
         gameQuestions: state.gameConfigData.map((questionPackage) => {
-          const randomIndex = Math.floor(
-            Math.random() * questionPackage.questions.length,
-          );
+          const randomIndex = Math.floor(Math.random() * questionPackage.questions.length);
           const question = questionPackage.questions[randomIndex];
           const deepCopyOfQuestion = {
             questionText: question.questionText,
@@ -145,24 +143,19 @@ const gameReducer = (state = initState, action) => {
         ...state,
         score:
           state.scoreDashboard[
-            state.scoreDashboard.findIndex(
-              (score) => score.value === state.score,
-            ) - 1
+            state.scoreDashboard.findIndex((score) => score.value === state.score) - 1
           ].value,
       };
     case SET_SCORE_QUESTION:
       return {
         ...state,
-        question: state.gameQuestions.find(
-          (question) => question.questionScore === state.score,
-        ).question,
+        question: state.gameQuestions.find((question) => question.questionScore === state.score)
+          .question,
       };
     case SET_ANSWER:
       return {
         ...state,
-        answer: state.question.answers.find(
-          (answer) => answer.answerId === action.payload,
-        ),
+        answer: state.question.answers.find((answer) => answer.answerId === action.payload),
       };
     case SET_SELECTED_AND_DISABLED:
       return {
