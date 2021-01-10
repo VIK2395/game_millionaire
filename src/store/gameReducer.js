@@ -8,7 +8,7 @@ import {
   SET_EARNED,
   SET_GAME_CONFIG_DATA,
   SET_IS_IN_GAME,
-  SET_IS_IN_GAME_END,
+  SET_IS_IN_GAME_END, SET_LOAD_ERROR,
   SET_SCORE_QUESTION,
   SET_SELECTED_AND_DISABLED,
   SHOW_CORRECT_ANSWER,
@@ -18,6 +18,7 @@ import {
 
 const initState = {
   isInitLoad: true,
+  loadError: {},
   isLoaded: false,
   isInGame: false,
   isInGameEnd: false,
@@ -248,6 +249,11 @@ const gameReducer = (state = initState, action) => {
         ...state,
         isInGameEnd: action.payload,
       };
+    case SET_LOAD_ERROR:
+      return {
+        ...state,
+        loadError: action.payload
+      }
     default:
       return state;
   }

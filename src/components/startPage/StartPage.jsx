@@ -24,6 +24,7 @@ const StartPage = ({
   isInGame,
   setIsInGameEnd,
   formGameQuestions,
+                     loadError
 }) => {
   const onStartClicked = () => {
     disableIsInitLoad();
@@ -37,6 +38,14 @@ const StartPage = ({
   };
 
   if (isInGame) return <Redirect to="/game" />;
+
+  if (loadError.name) {
+    return (
+        <div className={s['error-message']}>
+          <p>{loadError.message}</p>
+        </div>
+    );
+  }
 
   return (
     <div className={s.wrapper}>
@@ -92,6 +101,7 @@ const StartPage = ({
 
 const mapStateToProps = (state) => ({
   isInGame: state.isInGame,
+  loadError: state.loadError
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -24,6 +24,13 @@ export const DISABLE_IS_INIT_LOAD = 'DISABLE_IS_INIT_LOAD';
 export const SET_IS_IN_GAME = 'SET_IS_IN_GAME';
 export const SET_IS_IN_GAME_END = 'SET_IS_IN_GAME_END';
 
+export const SET_LOAD_ERROR = 'SET_LOAD_ERROR';
+
+export const setLoadError = (errorMessage) => ({
+  type: SET_LOAD_ERROR,
+  payload: errorMessage,
+});
+
 export const setIsInGameEnd = (to) => ({
   type: SET_IS_IN_GAME_END,
   payload: to,
@@ -55,17 +62,36 @@ export const fetchGameConfigData = () => (dispatch) => {
   docRef
     .get()
     .then((doc) => {
-      if (doc.exists) {
+      try {
+        if (!doc.exists)
+          throw new Error(
+            "Oops! No 'docConfig' document in the database collection!"
+          );
+        if (!doc.data().config)
+          throw new Error(
+            "Oops! No 'config' field in the 'docConfig' document of the database!"
+          );
         return JSON.parse(doc.data().config);
+        //return JSON.parse("{ bad json o_O }");
+      } catch (error) {
+        if (error.name == 'SyntaxError') {
+          throw new Error(
+            "Oops! Game JSON 'config' badly formated. Please check the file!"
+          );
+        } else {
+          throw error;
+        }
       }
-      return console.log('No docConfig file in DataBase!');
     })
     .then((gameConfigData) => {
       dispatch(setGameConfigData(gameConfigData));
+    })
+    .finally(() => {
+      //error comes through finally. It is ok.
       dispatch(toggleIsLoaded());
     })
     .catch((error) => {
-      console.log('Back-end database request error: ', error);
+      dispatch(setLoadError(error));
     });
 };
 

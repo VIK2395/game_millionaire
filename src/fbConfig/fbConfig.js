@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-// import "firebase/auth";
 import 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -16,7 +15,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 // Initialize Firestore
 firebase.firestore();
-// Initialize Firebase
 
 // firebase object for setting the back firebase project when export used
 export default firebase;
