@@ -8,13 +8,14 @@ import {
   SET_EARNED,
   SET_GAME_CONFIG_DATA,
   SET_IS_IN_GAME,
-  SET_IS_IN_GAME_END, SET_LOAD_ERROR,
+  SET_IS_IN_GAME_END,
+  SET_LOAD_ERROR,
   SET_SCORE_QUESTION,
   SET_SELECTED_AND_DISABLED,
   SHOW_CORRECT_ANSWER,
   TOGGLE_IS_LOADED,
   UPDATE_SCORE_DASHBOARD,
-} from './gameActions';
+} from './actionTypees';
 
 const initState = {
   isInitLoad: true,
@@ -22,8 +23,8 @@ const initState = {
   isLoaded: false,
   isInGame: false,
   isInGameEnd: false,
-  score: 500, // null
-  earned: 0, // null
+  score: 500,
+  earned: 0,
   answer: {
     answerId: null,
     answerText: null,
@@ -96,10 +97,19 @@ const initState = {
     },
   ],
 
-  gameQuestions: null,
+  gameQuestions: [],
 
-  gameConfigData: null,
+  gameConfigData: [],
 };
+
+function shuffle(array) {
+  // eslint-disable-next-line no-plusplus
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    // eslint-disable-next-line no-param-reassign
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 const gameReducer = (state = initState, action) => {
   switch (action.type) {
@@ -108,23 +118,13 @@ const gameReducer = (state = initState, action) => {
         ...state,
         gameConfigData: action.payload,
       };
-    case TOGGLE_IS_LOADED:
-      return {
-        ...state,
-        isLoaded: true,
-      };
     case FORM_GAME_QUESTIONS:
-      function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-      }
-
       return {
         ...state,
         gameQuestions: state.gameConfigData.map((questionPackage) => {
-          const randomIndex = Math.floor(Math.random() * questionPackage.questions.length);
+          const randomIndex = Math.floor(
+            Math.random() * questionPackage.questions.length
+          );
           const question = questionPackage.questions[randomIndex];
           const deepCopyOfQuestion = {
             questionText: question.questionText,
@@ -139,24 +139,34 @@ const gameReducer = (state = initState, action) => {
           };
         }),
       };
+    case TOGGLE_IS_LOADED:
+      return {
+        ...state,
+        isLoaded: true,
+      };
     case INCREASE_SCORE:
       return {
         ...state,
         score:
           state.scoreDashboard[
-            state.scoreDashboard.findIndex((score) => score.value === state.score) - 1
+            state.scoreDashboard.findIndex(
+              (score) => score.value === state.score
+            ) - 1
           ].value,
       };
     case SET_SCORE_QUESTION:
       return {
         ...state,
-        question: state.gameQuestions.find((question) => question.questionScore === state.score)
-          .question,
+        question: state.gameQuestions.find(
+          (question) => question.questionScore === state.score
+        ).question,
       };
     case SET_ANSWER:
       return {
         ...state,
-        answer: state.question.answers.find((answer) => answer.answerId === action.payload),
+        answer: state.question.answers.find(
+          (answer) => answer.answerId === action.payload
+        ),
       };
     case SET_SELECTED_AND_DISABLED:
       return {
@@ -252,8 +262,8 @@ const gameReducer = (state = initState, action) => {
     case SET_LOAD_ERROR:
       return {
         ...state,
-        loadError: action.payload
-      }
+        loadError: action.payload,
+      };
     default:
       return state;
   }

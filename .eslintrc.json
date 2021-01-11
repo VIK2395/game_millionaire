@@ -5,11 +5,10 @@
     },
     "parser": "babel-eslint",
     "extends": [
-        //"airbnb",
-        //"plugin:react/recommended",
-        "prettier"
-
-        /*"prettier/react"*/
+        "airbnb",
+        "plugin:react/recommended",
+        "prettier",
+        "prettier/react"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -19,14 +18,18 @@
         "sourceType": "module"
     },
     "plugins": [
-        //"react",
+        "react",
         "prettier"
     ],
     "rules": {
         "prettier/prettier": "off",
-        "no-unused-vars": "off",
-        "no-console": "off",
-        "no-param-reassign": "off",
-        "no-plusplus": "off"
+        "react/prop-types": 0,
+        "jsx-a11y/no-static-element-interactions": 0,
+        "jsx-a11y/click-events-have-key-events": 0,
+        "no-shadow": 0
+        //"no-unused-vars": "off",
+        //"no-console": "off",
+        //"no-param-reassign": "off",
+        //"no-plusplus": "off"
     }
 }

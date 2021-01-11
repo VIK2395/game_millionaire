@@ -1,34 +1,27 @@
-import firebase from '../fbConfig/fbConfig';
+import firebase from '../fbConfig/firebaseConfig';
 
-export const SET_GAME_CONFIG_DATA = 'SET_GAME_CONFIG_DATA';
-export const TOGGLE_IS_LOADED = 'TOGGLE_IS_LOADED';
-export const FORM_GAME_QUESTIONS = 'FORM_GAME_QUESTIONS';
+import {
+  DISABLE_IS_INIT_LOAD,
+  FORM_GAME_QUESTIONS,
+  INCREASE_SCORE,
+  RESET_EARNED,
+  RESET_SCORE,
+  SET_ANSWER,
+  SET_EARNED,
+  SET_GAME_CONFIG_DATA,
+  SET_IS_IN_GAME,
+  SET_IS_IN_GAME_END,
+  SET_LOAD_ERROR,
+  SET_SCORE_QUESTION,
+  SET_SELECTED_AND_DISABLED,
+  SHOW_CORRECT_ANSWER,
+  TOGGLE_IS_LOADED,
+  UPDATE_SCORE_DASHBOARD,
+} from './actionTypees';
 
-export const INCREASE_SCORE = 'INCREASE_SCORE';
-export const SET_SCORE_QUESTION = 'SET_SCORE_QUESTION';
-
-export const SET_ANSWER = 'SET_ANSWER';
-export const SET_SELECTED_AND_DISABLED = 'SET_SELECTED_AND_DISABLED';
-
-export const SHOW_CORRECT_ANSWER = 'SHOW_CORRECT_ANSWER';
-export const SET_EARNED = 'SET_EARNED';
-
-export const UPDATE_SCORE_DASHBOARD = 'UPDATE_SCORE_DASHBOARD';
-
-export const RESET_SCORE = 'RESET_SCORE';
-export const RESET_EARNED = 'RESET_EARNED';
-
-/* redirect */
-
-export const DISABLE_IS_INIT_LOAD = 'DISABLE_IS_INIT_LOAD';
-export const SET_IS_IN_GAME = 'SET_IS_IN_GAME';
-export const SET_IS_IN_GAME_END = 'SET_IS_IN_GAME_END';
-
-export const SET_LOAD_ERROR = 'SET_LOAD_ERROR';
-
-export const setLoadError = (errorMessage) => ({
+export const setLoadError = (error) => ({
   type: SET_LOAD_ERROR,
-  payload: errorMessage,
+  payload: error,
 });
 
 export const setIsInGameEnd = (to) => ({
@@ -65,16 +58,16 @@ export const fetchGameConfigData = () => (dispatch) => {
       try {
         if (!doc.exists)
           throw new Error(
-            "Oops! No 'docConfig' document in the database collection!"
+            "Oops! No 'docConfig' document in the database 'gameConfigData' collection!"
           );
         if (!doc.data().config)
           throw new Error(
             "Oops! No 'config' field in the 'docConfig' document of the database!"
           );
         return JSON.parse(doc.data().config);
-        //return JSON.parse("{ bad json o_O }");
+        // return JSON.parse("{ bad json o_O }");
       } catch (error) {
-        if (error.name == 'SyntaxError') {
+        if (error.name === 'SyntaxError') {
           throw new Error(
             "Oops! Game JSON 'config' badly formated. Please check the file!"
           );
@@ -87,7 +80,6 @@ export const fetchGameConfigData = () => (dispatch) => {
       dispatch(setGameConfigData(gameConfigData));
     })
     .finally(() => {
-      //error comes through finally. It is ok.
       dispatch(toggleIsLoaded());
     })
     .catch((error) => {

@@ -24,7 +24,7 @@ const StartPage = ({
   isInGame,
   setIsInGameEnd,
   formGameQuestions,
-                     loadError
+  loadError,
 }) => {
   const onStartClicked = () => {
     disableIsInitLoad();
@@ -41,9 +41,9 @@ const StartPage = ({
 
   if (loadError.name) {
     return (
-        <div className={s['error-message']}>
-          <p>{loadError.message}</p>
-        </div>
+      <div className={s['error-message']}>
+        <p>{loadError.message}</p>
+      </div>
     );
   }
 
@@ -101,7 +101,7 @@ const StartPage = ({
 
 const mapStateToProps = (state) => ({
   isInGame: state.isInGame,
-  loadError: state.loadError
+  loadError: state.loadError,
 });
 
 const mapDispatchToProps = (dispatch) => ({
