@@ -1,4 +1,4 @@
-import firebase from '../fbConfig/firebaseConfig';
+import firebase from '../firebaseConfig/firebaseConfig';
 
 import {
   DISABLE_IS_INIT_LOAD,
@@ -17,7 +17,7 @@ import {
   SHOW_CORRECT_ANSWER,
   TOGGLE_IS_LOADED,
   UPDATE_SCORE_DASHBOARD,
-} from './actionTypees';
+} from './constants';
 
 export const setLoadError = (error) => ({
   type: SET_LOAD_ERROR,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import logoHand from '../../logoHand.svg';
+import logoHand from '../../assets/logoHand.svg';
 import './EndPage.css';
 
 const EndPage = ({ earned, isInitLoad, isInGame }) => {

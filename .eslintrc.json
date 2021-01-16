@@ -6,6 +6,7 @@
     "parser": "babel-eslint",
     "extends": [
         "airbnb",
+        "airbnb/hooks",
         "plugin:react/recommended",
         "prettier",
         "prettier/react"
@@ -22,14 +23,12 @@
         "prettier"
     ],
     "rules": {
-        "prettier/prettier": "off",
+        "prettier/prettier": "error",
         "react/prop-types": 0,
         "jsx-a11y/no-static-element-interactions": 0,
         "jsx-a11y/click-events-have-key-events": 0,
-        "no-shadow": 0
-        //"no-unused-vars": "off",
-        //"no-console": "off",
-        //"no-param-reassign": "off",
-        //"no-plusplus": "off"
+        "no-shadow": 0,
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-param-reassign": ["error", { "props": false }]
     }
 }

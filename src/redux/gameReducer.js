@@ -15,80 +15,115 @@ import {
   SHOW_CORRECT_ANSWER,
   TOGGLE_IS_LOADED,
   UPDATE_SCORE_DASHBOARD,
-} from './actionTypees';
+} from './constants';
+
+import shuffle from '../utils/utils';
 
 const initState = {
   isInitLoad: true,
+  isGameConfigDataLoaded: false,
   loadError: {},
-  isLoaded: false,
   isInGame: false,
   isInGameEnd: false,
   score: 500,
   earned: 0,
   answer: {
-    answerId: null,
-    answerText: null,
-    isCorrect: null,
+    answerId: 'string',
+    answerText: 'string',
+    isCorrect: false,
   },
   question: {
-    // null
     questionText: "Just init question. Dude, don't you know what you do?",
     answers: [
       {
         answerId: 'sfjhk',
         answerText: 'Just init answer_01',
         isCorrect: true,
+        isSelected: false,
+        isDisabled: false,
+        isShown: false,
       },
       {
         answerId: 'sdjfhkkj',
         answerText: 'Just init answer_02',
         isCorrect: false,
+        isSelected: false,
+        isDisabled: false,
+        // isShown: false,
       },
       {
         answerId: 'sduhkuhk',
         answerText: 'Just init answer_03',
         isCorrect: false,
+        isSelected: false,
+        isDisabled: false,
+        // isShown: false,
       },
       {
         answerId: 'sdfkhhk',
         answerText: 'Just init answer_04',
         isCorrect: false,
+        isSelected: false,
+        isDisabled: false,
+        // isShown: false,
       },
     ],
   },
   scoreDashboard: [
     {
       value: 1000000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 500000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 250000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 125000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 64000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 32000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 16000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 8000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 4000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 2000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 1000,
+      isActive: false,
+      isPassed: false,
     },
     {
       value: 500,
@@ -101,15 +136,6 @@ const initState = {
 
   gameConfigData: [],
 };
-
-function shuffle(array) {
-  // eslint-disable-next-line no-plusplus
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    // eslint-disable-next-line no-param-reassign
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
 
 const gameReducer = (state = initState, action) => {
   switch (action.type) {
@@ -142,32 +168,37 @@ const gameReducer = (state = initState, action) => {
     case TOGGLE_IS_LOADED:
       return {
         ...state,
-        isLoaded: true,
+        isGameConfigDataLoaded: true,
       };
-    case INCREASE_SCORE:
+    case INCREASE_SCORE: {
+      const scoreIndex = state.scoreDashboard.findIndex(
+        (score) => score.value === state.score
+      );
+      const nextScoreIndex = scoreIndex - 1;
+      const nextScoreValue = state.scoreDashboard[nextScoreIndex].value;
       return {
         ...state,
-        score:
-          state.scoreDashboard[
-            state.scoreDashboard.findIndex(
-              (score) => score.value === state.score
-            ) - 1
-          ].value,
+        score: nextScoreValue,
       };
-    case SET_SCORE_QUESTION:
+    }
+    case SET_SCORE_QUESTION: {
+      const { question } = state.gameQuestions.find(
+        (question) => question.questionScore === state.score
+      );
       return {
         ...state,
-        question: state.gameQuestions.find(
-          (question) => question.questionScore === state.score
-        ).question,
+        question,
       };
-    case SET_ANSWER:
+    }
+    case SET_ANSWER: {
+      const answer = state.question.answers.find(
+        (answer) => answer.answerId === action.payload
+      );
       return {
         ...state,
-        answer: state.question.answers.find(
-          (answer) => answer.answerId === action.payload
-        ),
+        answer,
       };
+    }
     case SET_SELECTED_AND_DISABLED:
       return {
         ...state,

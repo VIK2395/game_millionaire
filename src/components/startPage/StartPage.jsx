@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import logoHand from '../../logoHand.svg';
-import s from './StartPage.module.css';
+import logoHand from '../../assets/logoHand.svg';
+import style from './StartPage.module.css';
 import {
   disableIsInitLoad,
   formGameQuestions,
@@ -12,7 +12,9 @@ import {
   setIsInGameEnd,
   setScoreQuestion,
   updateScoreDashboard,
-} from '../../store/gameActions';
+} from '../../redux/gameActions';
+
+import ErrorMessage from '../common/errorMessage/ErrorMessage';
 
 const StartPage = ({
   resetEarned,
@@ -39,56 +41,50 @@ const StartPage = ({
 
   if (isInGame) return <Redirect to="/game" />;
 
-  if (loadError.name) {
-    return (
-      <div className={s['error-message']}>
-        <p>{loadError.message}</p>
-      </div>
-    );
-  }
+  if (loadError.name) return <ErrorMessage error={loadError} />;
 
   return (
-    <div className={s.wrapper}>
-      <div className={`${s.content} ${s.content_portrait}`}>
-        <div className={s['content__portrait-block']}>
+    <div className={style.wrapper}>
+      <div className={`${style.content} ${style.content_portrait}`}>
+        <div className={style['content__portrait-block']}>
           <img
-            className={`${s.content__logo} ${s.logo}`}
+            className={`${style.content__logo} ${style.logo}`}
             draggable="false"
             width="198"
             height="156"
             src={logoHand}
             alt="logo_hand"
           />
-          <p className={s.content__text}>
+          <p className={style.content__text}>
             Who wants to be
             <br />a millionaire?
           </p>
         </div>
         <Link
           to="/game"
-          className={`${s['content__link-button']} ${s['link-button']}`}
+          className={`${style['content__link-button']} ${style['link-button']}`}
           onClick={onStartClicked}
         >
           Start
         </Link>
       </div>
-      <div className={`${s.content} ${s.content_landscape}`}>
+      <div className={`${style.content} ${style.content_landscape}`}>
         <img
-          className={`${s.content__logo} ${s.logo}`}
+          className={`${style.content__logo} ${style.logo}`}
           draggable="false"
           width="198"
           height="156"
           src={logoHand}
           alt="logo_hand"
         />
-        <div className={s['content__landscape-block']}>
-          <p className={s.content__text}>
+        <div className={style['content__landscape-block']}>
+          <p className={style.content__text}>
             Who wants to be
             <br />a millionaire?
           </p>
           <Link
             to="/game"
-            className={`${s['content__link-button']} ${s['link-button']}`}
+            className={`${style['content__link-button']} ${style['link-button']}`}
             onClick={onStartClicked}
           >
             Start

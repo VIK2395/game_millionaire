@@ -1,35 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import gameReducer from './store/gameReducer';
-import { fetchGameConfigData } from './store/gameActions';
-
-const store = createStore(gameReducer, applyMiddleware(thunk));
+import reportWebVitals from './test/reportWebVitals';
+import { fetchGameConfigData } from './redux/gameActions';
+import store from './redux/store';
 
 store.dispatch(fetchGameConfigData());
 
-const IsLoaded = ({ children }) => {
-  const isLoaded = useSelector((state) => state.isLoaded);
-  if (!isLoaded) {
-    return (
-      <div className="loader">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-  return children;
-};
+window.store = store;
 
 ReactDOM.render(
   <Provider store={store}>
-    <IsLoaded>
-      <App />
-    </IsLoaded>
+    <App />
   </Provider>,
   document.getElementById('root')
 );
