@@ -45,11 +45,11 @@ const GamePage = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  question: state.question,
-  isInitLoad: state.isInitLoad,
-  isInGameEnd: state.isInGameEnd,
-  isInGameStart: state.isInGameStart,
+const mapStateToProps = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => ({
+  question,
+  isInitLoad,
+  isInGameEnd,
+  isInGameStart,
 });
 
 export default connect(mapStateToProps)(GamePage);

@@ -131,7 +131,7 @@ export const resetEarned = () => ({
   type: RESET_EARNED,
 });
 
-export const scenario = (answerId, history) => (dispatch, getState) => {
+export const checkAnswer = (answerId, history) => (dispatch, getState) => {
   dispatch(setAnswer(answerId));
   dispatch(setSelectedAndDisabled());
   setTimeout(() => {
@@ -159,4 +159,12 @@ export const scenario = (answerId, history) => (dispatch, getState) => {
       }, 3000);
     }
   }, 800);
+};
+
+export const resetGameData = () => (dispatch) => {
+  dispatch(formGameQuestions());
+  dispatch(resetScore());
+  dispatch(setScoreQuestion());
+  dispatch(updateScoreDashboard());
+  dispatch(resetEarned());
 };

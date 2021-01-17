@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { scenario } from '../../redux/gameActions';
+import { withRouter } from 'react-router-dom';
+import { checkAnswer } from '../../redux/gameActions';
 
-const AnswersList = ({ answers, scenario }) => {
-  const AnswerCell = ({ answer, index }) => {
+const AnswersList = ({ answers, checkAnswer }) => {
+  const AnswerCell = ({ answer, index, checkAnswer }) => {
     const classes = ['answer-cell'];
 
     if (answer.isSelected) {
@@ -31,9 +31,7 @@ const AnswersList = ({ answers, scenario }) => {
           <path
             className="answer-cell__body"
             tabIndex="-1"
-            onClick={() => {
-              scenario(answer.answerId);
-            }}
+            onClick={() => checkAnswer(answer.answerId)}
             d="M32.8175 5.31576C34.9762 2.29361 38.4615 0.5 42.1754 0.5H277.825C281.539 0.5 285.024 2.29361 287.183 5.31576L303.386 28L287.183 50.6842C285.024 53.7064 281.539 55.5 277.825 55.5H42.1754C38.4615 55.5 34.9762 53.7064 32.8175 50.6842L16.6145 28L32.8175 5.31576Z"
             fill="white"
             stroke="#D0D0D8"
@@ -76,7 +74,7 @@ const AnswersList = ({ answers, scenario }) => {
   return (
     <ul className="content__answers-list">
       {answers.map((answer, index) => (
-        <AnswerCell key={answer.answerId} answer={answer} index={index} />
+        <AnswerCell key={answer.answerId} answer={answer} index={index} checkAnswer={checkAnswer} />
       ))}
     </ul>
   );
@@ -87,7 +85,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, { history }) => ({
-  scenario: (answerId) => dispatch(scenario(answerId, history)),
+  checkAnswer: (answerId) => dispatch(checkAnswer(answerId, history)),
 });
 
 export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(AnswersList);

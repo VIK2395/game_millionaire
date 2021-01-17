@@ -55,8 +55,8 @@ const ScoreList = ({ scoreDashboard }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  scoreDashboard: state.scoreDashboard,
+const mapStateToProps = ({ scoreDashboard }) => ({
+  scoreDashboard,
 });
 
 export default connect(mapStateToProps)(ScoreList);

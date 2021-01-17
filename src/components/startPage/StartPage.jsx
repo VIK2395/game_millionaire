@@ -5,44 +5,30 @@ import logoHand from '../../assets/logoHand.svg';
 import style from './StartPage.module.css';
 import {
   disableIsInitLoad,
-  formGameQuestions,
-  resetEarned,
-  resetScore,
+  resetGameData,
   setIsInGame,
   setIsInGameEnd,
   setIsInGameStart,
-  setScoreQuestion,
-  updateScoreDashboard,
 } from '../../redux/gameActions';
 
 import ErrorMessage from '../common/errorMessage/ErrorMessage';
 
 const StartPage = ({
-  resetEarned,
-  resetScore,
-  setScoreQuestion,
-  updateScoreDashboard,
-  disableIsInitLoad,
   isInGame,
   isInGameEnd,
+  loadError,
+  disableIsInitLoad,
+  resetGameData,
   setIsInGame,
   setIsInGameEnd,
   setIsInGameStart,
-  formGameQuestions,
-  loadError,
 }) => {
   useEffect(() => {
     disableIsInitLoad();
   }, [disableIsInitLoad]); // runs only first time
 
   const onStartClicked = () => {
-    // dispatch(resetStore())
-    formGameQuestions();
-    resetScore();
-    setScoreQuestion();
-    updateScoreDashboard();
-    resetEarned();
-    // redirect
+    resetGameData();
     setIsInGame(true);
     setIsInGameEnd(false);
     setIsInGameStart(false);
@@ -67,8 +53,9 @@ const StartPage = ({
             alt="logo_hand"
           />
           <p className={style.content__text}>
-            Who wants to be
-            <br />a millionaire?
+            Хто хоче стати
+            <br />
+            мільйонером?
           </p>
         </div>
         <Link
@@ -76,7 +63,7 @@ const StartPage = ({
           className={`${style['content__link-button']} ${style['link-button']}`}
           onClick={onStartClicked}
         >
-          Start
+          Старт
         </Link>
       </div>
       <div className={`${style.content} ${style.content_landscape}`}>
@@ -90,15 +77,16 @@ const StartPage = ({
         />
         <div className={style['content__landscape-block']}>
           <p className={style.content__text}>
-            Who wants to be
-            <br />a millionaire?
+            Хто хоче стати
+            <br />
+            мільйонером?
           </p>
           <Link
             to="/game"
             className={`${style['content__link-button']} ${style['link-button']}`}
             onClick={onStartClicked}
           >
-            Start
+            Старт
           </Link>
         </div>
       </div>
@@ -106,22 +94,16 @@ const StartPage = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  isInGame: state.isInGame,
-  isInGameEnd: state.isInGameEnd,
-  loadError: state.loadError,
+const mapStateToProps = ({ isInGame, isInGameEnd, loadError }) => ({
+  isInGame,
+  isInGameEnd,
+  loadError,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  disableIsInitLoad: () => dispatch(disableIsInitLoad()),
-  formGameQuestions: () => dispatch(formGameQuestions()),
-  resetScore: () => dispatch(resetScore()),
-  setScoreQuestion: () => dispatch(setScoreQuestion()),
-  updateScoreDashboard: () => dispatch(updateScoreDashboard()),
-  resetEarned: () => dispatch(resetEarned()),
-  setIsInGame: (to) => dispatch(setIsInGame(to)),
-  setIsInGameEnd: (to) => dispatch(setIsInGameEnd(to)),
-  setIsInGameStart: (to) => dispatch(setIsInGameStart(to)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(StartPage);
+export default connect(mapStateToProps, {
+  disableIsInitLoad,
+  resetGameData,
+  setIsInGame,
+  setIsInGameEnd,
+  setIsInGameStart,
+})(StartPage);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logoHand from '../../assets/logoHand.svg';
-import './EndPage.css';
+import style from './EndPage.module.css';
 import { setIsInGameStart, setIsInGameEnd } from '../../redux/gameActions';
 
 const EndPage = ({
@@ -17,50 +17,58 @@ const EndPage = ({
 
   if (isInGame) return <Redirect to="/game" />;
 
-  const handleClick = () => {
+  const onTryAgainClicked = () => {
     setIsInGameStart(true);
     setIsInGameEnd(false);
   };
 
   return (
-    <div className="End-wrapper">
-      <div className="End-content End-content_portrait">
-        <div className="End-content__portrait-block">
+    <div className={style.wrapper}>
+      <div className={`${style.content} ${style.content_portrait}`}>
+        <div className={style['content__portrait-block']}>
           <img
-            className="End-content__logo End-logo"
+            className={`${style.content__logo} ${style.logo}`}
             draggable="false"
             width="198"
             height="156"
             src={logoHand}
             alt="logo_hand"
           />
-          <p className="End-content__text">
-            <span className="End-content__text-span">Total score:</span>
+          <p className={style.content__text}>
+            <span className={style['content__text-span']}>Загальний рахунок:</span>
             <br />
-            {`$${earned.toLocaleString('en-US')} earned`}
+            {`$${earned.toLocaleString('en-US')} зароблено`}
           </p>
         </div>
-        <Link to="/" className="End-content__link-button End-link-button" onClick={handleClick}>
-          Try again
+        <Link
+          to="/"
+          className={`${style['content__link-button']} ${style['link-button']}`}
+          onClick={onTryAgainClicked}
+        >
+          Спробувати ще раз
         </Link>
       </div>
-      <div className="End-content End-content_landscape">
+      <div className={`${style.content} ${style.content_landscape}`}>
         <img
-          className="End-content__logo End-logo"
+          className={`${style.content__logo} ${style.logo}`}
           draggable="false"
           width="198"
           height="156"
           src={logoHand}
           alt="logo_hand"
         />
-        <div className="End-content__landscape-block">
-          <p className="End-content__text">
-            <span className="End-content__text-span">Total score:</span>
+        <div className={style['content__landscape-block']}>
+          <p className={style.content__text}>
+            <span className={style['content__text-span']}>Загальний рахунок:</span>
             <br />
-            {`$${earned.toLocaleString('en-US')} earned`}
+            {`$${earned.toLocaleString('en-US')} зароблено`}
           </p>
-          <Link to="/" className="End-content__link-button End-link-button" onClick={handleClick}>
-            Try again
+          <Link
+            to="/"
+            className={`${style['content__link-button']} ${style['link-button']}`}
+            onClick={onTryAgainClicked}
+          >
+            Спробувати ще раз
           </Link>
         </div>
       </div>
@@ -68,16 +76,14 @@ const EndPage = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  earned: state.earned,
-  isInitLoad: state.isInitLoad,
-  isInGameStart: state.isInGameStart,
-  isInGame: state.isInGame,
+const mapStateToProps = ({ earned, isInitLoad, isInGameStart, isInGame }) => ({
+  earned,
+  isInitLoad,
+  isInGameStart,
+  isInGame,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setIsInGameStart: (to) => dispatch(setIsInGameStart(to)),
-  setIsInGameEnd: (to) => dispatch(setIsInGameEnd(to)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EndPage);
+export default connect(mapStateToProps, {
+  setIsInGameStart,
+  setIsInGameEnd,
+})(EndPage);
