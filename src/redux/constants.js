@@ -19,5 +19,6 @@ export const RESET_EARNED = 'RESET_EARNED';
 export const DISABLE_IS_INIT_LOAD = 'DISABLE_IS_INIT_LOAD';
 export const SET_IS_IN_GAME = 'SET_IS_IN_GAME';
 export const SET_IS_IN_GAME_END = 'SET_IS_IN_GAME_END';
+export const SET_IS_IN_GAME_START = 'SET_IS_IN_GAME_START';
 
 export const SET_LOAD_ERROR = 'SET_LOAD_ERROR';

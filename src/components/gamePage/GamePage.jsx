@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import ScoreList from './ScoreList';
 import AnswersList from './AnswersList';
 
-const GamePage = ({ question, isInitLoad, isInGameEnd }) => {
+const GamePage = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => {
   const [isActive, setActiveClass] = useState(false);
 
   const toggleActiveClass = () => {
     setActiveClass((isActive) => !isActive);
   };
 
-  if (isInitLoad) return <Redirect to="/" />;
+  if (isInitLoad || isInGameStart) return <Redirect to="/" />;
 
   if (isInGameEnd) return <Redirect to="/gameover" />;
 
@@ -49,6 +49,7 @@ const mapStateToProps = (state) => ({
   question: state.question,
   isInitLoad: state.isInitLoad,
   isInGameEnd: state.isInGameEnd,
+  isInGameStart: state.isInGameStart,
 });
 
 export default connect(mapStateToProps)(GamePage);

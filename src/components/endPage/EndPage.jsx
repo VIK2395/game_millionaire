@@ -3,11 +3,24 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logoHand from '../../assets/logoHand.svg';
 import './EndPage.css';
+import { setIsInGameStart, setIsInGameEnd } from '../../redux/gameActions';
 
-const EndPage = ({ earned, isInitLoad, isInGame }) => {
-  if (isInitLoad) return <Redirect to="/" />;
+const EndPage = ({
+  earned,
+  isInitLoad,
+  isInGameStart,
+  isInGame,
+  setIsInGameStart,
+  setIsInGameEnd,
+}) => {
+  if (isInitLoad || isInGameStart) return <Redirect to="/" />;
 
   if (isInGame) return <Redirect to="/game" />;
+
+  const handleClick = () => {
+    setIsInGameStart(true);
+    setIsInGameEnd(false);
+  };
 
   return (
     <div className="End-wrapper">
@@ -27,7 +40,7 @@ const EndPage = ({ earned, isInitLoad, isInGame }) => {
             {`$${earned.toLocaleString('en-US')} earned`}
           </p>
         </div>
-        <Link to="/" className="End-content__link-button End-link-button">
+        <Link to="/" className="End-content__link-button End-link-button" onClick={handleClick}>
           Try again
         </Link>
       </div>
@@ -46,7 +59,7 @@ const EndPage = ({ earned, isInitLoad, isInGame }) => {
             <br />
             {`$${earned.toLocaleString('en-US')} earned`}
           </p>
-          <Link to="/" className="End-content__link-button End-link-button">
+          <Link to="/" className="End-content__link-button End-link-button" onClick={handleClick}>
             Try again
           </Link>
         </div>
@@ -58,7 +71,13 @@ const EndPage = ({ earned, isInitLoad, isInGame }) => {
 const mapStateToProps = (state) => ({
   earned: state.earned,
   isInitLoad: state.isInitLoad,
+  isInGameStart: state.isInGameStart,
   isInGame: state.isInGame,
 });
 
-export default connect(mapStateToProps)(EndPage);
+const mapDispatchToProps = (dispatch) => ({
+  setIsInGameStart: (to) => dispatch(setIsInGameStart(to)),
+  setIsInGameEnd: (to) => dispatch(setIsInGameEnd(to)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EndPage);

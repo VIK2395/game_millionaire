@@ -1,1 +1,1 @@
-{  "singleQuote": true,  "endOfLine": "lf"}
+{  "singleQuote": true,  "semi": true,  "printWidth": 100,  "endOfLine": "lf"}

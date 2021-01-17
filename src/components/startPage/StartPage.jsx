@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logoHand from '../../assets/logoHand.svg';
@@ -10,6 +10,7 @@ import {
   resetScore,
   setIsInGame,
   setIsInGameEnd,
+  setIsInGameStart,
   setScoreQuestion,
   updateScoreDashboard,
 } from '../../redux/gameActions';
@@ -22,24 +23,34 @@ const StartPage = ({
   setScoreQuestion,
   updateScoreDashboard,
   disableIsInitLoad,
-  setIsInGame,
   isInGame,
+  isInGameEnd,
+  setIsInGame,
   setIsInGameEnd,
+  setIsInGameStart,
   formGameQuestions,
   loadError,
 }) => {
-  const onStartClicked = () => {
+  useEffect(() => {
     disableIsInitLoad();
+  }, [disableIsInitLoad]); // runs only first time
+
+  const onStartClicked = () => {
+    // dispatch(resetStore())
     formGameQuestions();
     resetScore();
     setScoreQuestion();
     updateScoreDashboard();
     resetEarned();
+    // redirect
     setIsInGame(true);
     setIsInGameEnd(false);
+    setIsInGameStart(false);
   };
 
   if (isInGame) return <Redirect to="/game" />;
+
+  if (isInGameEnd) return <Redirect to="/gameover" />;
 
   if (loadError.name) return <ErrorMessage error={loadError} />;
 
@@ -97,6 +108,7 @@ const StartPage = ({
 
 const mapStateToProps = (state) => ({
   isInGame: state.isInGame,
+  isInGameEnd: state.isInGameEnd,
   loadError: state.loadError,
 });
 
@@ -109,6 +121,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetEarned: () => dispatch(resetEarned()),
   setIsInGame: (to) => dispatch(setIsInGame(to)),
   setIsInGameEnd: (to) => dispatch(setIsInGameEnd(to)),
+  setIsInGameStart: (to) => dispatch(setIsInGameStart(to)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartPage);

@@ -9,6 +9,7 @@ import {
   SET_GAME_CONFIG_DATA,
   SET_IS_IN_GAME,
   SET_IS_IN_GAME_END,
+  SET_IS_IN_GAME_START,
   SET_LOAD_ERROR,
   SET_SCORE_QUESTION,
   SET_SELECTED_AND_DISABLED,
@@ -23,6 +24,7 @@ const initState = {
   isInitLoad: true,
   isGameConfigDataLoaded: false,
   loadError: {},
+  isInGameStart: true,
   isInGame: false,
   isInGameEnd: false,
   score: 500,
@@ -49,7 +51,7 @@ const initState = {
         isCorrect: false,
         isSelected: false,
         isDisabled: false,
-        // isShown: false,
+        // isShown?: false,
       },
       {
         answerId: 'sduhkuhk',
@@ -148,9 +150,7 @@ const gameReducer = (state = initState, action) => {
       return {
         ...state,
         gameQuestions: state.gameConfigData.map((questionPackage) => {
-          const randomIndex = Math.floor(
-            Math.random() * questionPackage.questions.length
-          );
+          const randomIndex = Math.floor(Math.random() * questionPackage.questions.length);
           const question = questionPackage.questions[randomIndex];
           const deepCopyOfQuestion = {
             questionText: question.questionText,
@@ -171,9 +171,7 @@ const gameReducer = (state = initState, action) => {
         isGameConfigDataLoaded: true,
       };
     case INCREASE_SCORE: {
-      const scoreIndex = state.scoreDashboard.findIndex(
-        (score) => score.value === state.score
-      );
+      const scoreIndex = state.scoreDashboard.findIndex((score) => score.value === state.score);
       const nextScoreIndex = scoreIndex - 1;
       const nextScoreValue = state.scoreDashboard[nextScoreIndex].value;
       return {
@@ -191,9 +189,7 @@ const gameReducer = (state = initState, action) => {
       };
     }
     case SET_ANSWER: {
-      const answer = state.question.answers.find(
-        (answer) => answer.answerId === action.payload
-      );
+      const answer = state.question.answers.find((answer) => answer.answerId === action.payload);
       return {
         ...state,
         answer,
@@ -289,6 +285,11 @@ const gameReducer = (state = initState, action) => {
       return {
         ...state,
         isInGameEnd: action.payload,
+      };
+    case SET_IS_IN_GAME_START:
+      return {
+        ...state,
+        isInGameStart: action.payload,
       };
     case SET_LOAD_ERROR:
       return {

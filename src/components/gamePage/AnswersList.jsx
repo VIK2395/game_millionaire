@@ -90,7 +90,4 @@ const mapDispatchToProps = (dispatch, { history }) => ({
   scenario: (answerId) => dispatch(scenario(answerId, history)),
 });
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(AnswersList);
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(AnswersList);

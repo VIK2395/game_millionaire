@@ -11,6 +11,7 @@ import {
   SET_GAME_CONFIG_DATA,
   SET_IS_IN_GAME,
   SET_IS_IN_GAME_END,
+  SET_IS_IN_GAME_START,
   SET_LOAD_ERROR,
   SET_SCORE_QUESTION,
   SET_SELECTED_AND_DISABLED,
@@ -24,13 +25,18 @@ export const setLoadError = (error) => ({
   payload: error,
 });
 
+export const setIsInGame = (to) => ({
+  type: SET_IS_IN_GAME,
+  payload: to,
+});
+
 export const setIsInGameEnd = (to) => ({
   type: SET_IS_IN_GAME_END,
   payload: to,
 });
 
-export const setIsInGame = (to) => ({
-  type: SET_IS_IN_GAME,
+export const setIsInGameStart = (to) => ({
+  type: SET_IS_IN_GAME_START,
   payload: to,
 });
 
@@ -61,16 +67,12 @@ export const fetchGameConfigData = () => (dispatch) => {
             "Oops! No 'docConfig' document in the database 'gameConfigData' collection!"
           );
         if (!doc.data().config)
-          throw new Error(
-            "Oops! No 'config' field in the 'docConfig' document of the database!"
-          );
+          throw new Error("Oops! No 'config' field in the 'docConfig' document of the database!");
         return JSON.parse(doc.data().config);
         // return JSON.parse("{ bad json o_O }");
       } catch (error) {
         if (error.name === 'SyntaxError') {
-          throw new Error(
-            "Oops! Game JSON 'config' badly formated. Please check the file!"
-          );
+          throw new Error("Oops! Game JSON 'config' badly formated. Please check the file!");
         } else {
           throw error;
         }
