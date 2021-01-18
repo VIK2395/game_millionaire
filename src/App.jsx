@@ -20,8 +20,8 @@ function App({ isGameConfigDataLoaded }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  isGameConfigDataLoaded: state.isGameConfigDataLoaded,
+const mapStateToProps = ({ isGameConfigDataLoaded }) => ({
+  isGameConfigDataLoaded,
 });
 
 export default connect(mapStateToProps)(App);

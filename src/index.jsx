@@ -9,8 +9,6 @@ import store from './redux/store';
 
 store.dispatch(fetchGameConfigData());
 
-window.store = store;
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

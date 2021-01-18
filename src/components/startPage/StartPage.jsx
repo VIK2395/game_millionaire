@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import logoHand from '../../assets/logoHand.svg';
 import style from './StartPage.module.css';
 import {
-  disableIsInitLoad,
+  setIsInitLoad,
   resetGameData,
   setIsInGame,
   setIsInGameEnd,
@@ -17,15 +17,15 @@ const StartPage = ({
   isInGame,
   isInGameEnd,
   loadError,
-  disableIsInitLoad,
+  setIsInitLoad,
   resetGameData,
   setIsInGame,
   setIsInGameEnd,
   setIsInGameStart,
 }) => {
   useEffect(() => {
-    disableIsInitLoad();
-  }, [disableIsInitLoad]); // runs only first time
+    setIsInitLoad(false);
+  }, [setIsInitLoad]); // runs only first time
 
   const onStartClicked = () => {
     resetGameData();
@@ -101,7 +101,7 @@ const mapStateToProps = ({ isInGame, isInGameEnd, loadError }) => ({
 });
 
 export default connect(mapStateToProps, {
-  disableIsInitLoad,
+  setIsInitLoad,
   resetGameData,
   setIsInGame,
   setIsInGameEnd,

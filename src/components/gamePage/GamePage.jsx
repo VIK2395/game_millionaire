@@ -33,9 +33,7 @@ const GamePage = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => {
         <div className="content__question">
           <p>{question.questionText}</p>
         </div>
-        <div className="content__answers">
-          <AnswersList />
-        </div>
+        <AnswersList />
       </section>
 
       <section className={`score ${isActive ? 'active' : ''}`}>

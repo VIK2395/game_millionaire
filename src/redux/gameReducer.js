@@ -1,5 +1,5 @@
 import {
-  DISABLE_IS_INIT_LOAD,
+  SET_IS_INIT_LOAD,
   FORM_GAME_QUESTIONS,
   INCREASE_SCORE,
   RESET_EARNED,
@@ -14,11 +14,11 @@ import {
   SET_SCORE_QUESTION,
   SET_SELECTED_AND_DISABLED,
   SHOW_CORRECT_ANSWER,
-  TOGGLE_IS_LOADED,
+  SET_IS_LOADED,
   UPDATE_SCORE_DASHBOARD,
-} from './constants';
+} from './actionTypes';
 
-import shuffle from '../utils/utils';
+import shuffle from '../utils/shuffle';
 
 const initState = {
   isInitLoad: true,
@@ -165,7 +165,7 @@ const gameReducer = (state = initState, action) => {
           };
         }),
       };
-    case TOGGLE_IS_LOADED:
+    case SET_IS_LOADED:
       return {
         ...state,
         isGameConfigDataLoaded: true,
@@ -271,10 +271,10 @@ const gameReducer = (state = initState, action) => {
         ...state,
         earned: 0,
       };
-    case DISABLE_IS_INIT_LOAD:
+    case SET_IS_INIT_LOAD:
       return {
         ...state,
-        isInitLoad: false,
+        isInitLoad: action.payload,
       };
     case SET_IS_IN_GAME:
       return {

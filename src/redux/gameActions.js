@@ -1,7 +1,7 @@
 import firebase from '../firebaseConfig/firebaseConfig';
 
 import {
-  DISABLE_IS_INIT_LOAD,
+  SET_IS_INIT_LOAD,
   FORM_GAME_QUESTIONS,
   INCREASE_SCORE,
   RESET_EARNED,
@@ -16,9 +16,9 @@ import {
   SET_SCORE_QUESTION,
   SET_SELECTED_AND_DISABLED,
   SHOW_CORRECT_ANSWER,
-  TOGGLE_IS_LOADED,
+  SET_IS_LOADED,
   UPDATE_SCORE_DASHBOARD,
-} from './constants';
+} from './actionTypes';
 
 export const setLoadError = (error) => ({
   type: SET_LOAD_ERROR,
@@ -40,8 +40,9 @@ export const setIsInGameStart = (to) => ({
   payload: to,
 });
 
-export const disableIsInitLoad = () => ({
-  type: DISABLE_IS_INIT_LOAD,
+export const setIsInitLoad = (to) => ({
+  type: SET_IS_INIT_LOAD,
+  payload: to,
 });
 
 export const setGameConfigData = (data) => ({
@@ -49,8 +50,9 @@ export const setGameConfigData = (data) => ({
   payload: data,
 });
 
-export const toggleIsLoaded = () => ({
-  type: TOGGLE_IS_LOADED,
+export const setIsLoaded = (to) => ({
+  type: SET_IS_LOADED,
+  payload: to,
 });
 
 export const fetchGameConfigData = () => (dispatch) => {
@@ -82,7 +84,7 @@ export const fetchGameConfigData = () => (dispatch) => {
       dispatch(setGameConfigData(gameConfigData));
     })
     .finally(() => {
-      dispatch(toggleIsLoaded());
+      dispatch(setIsLoaded(true));
     })
     .catch((error) => {
       dispatch(setLoadError(error));
