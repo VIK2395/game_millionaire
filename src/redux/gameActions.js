@@ -149,7 +149,7 @@ export const checkAnswer = (answerId, history) => (dispatch, getState) => {
         } else {
           dispatch(increaseScore());
           dispatch(setScoreQuestion());
-          dispatch(updateScoreDashboard());
+          // dispatch(updateScoreDashboard());
         }
       }, 2000);
     } else {
@@ -167,6 +167,6 @@ export const resetGameData = () => (dispatch) => {
   dispatch(formGameQuestions());
   dispatch(resetScore());
   dispatch(setScoreQuestion());
-  dispatch(updateScoreDashboard());
+  // dispatch(updateScoreDashboard());
   dispatch(resetEarned());
 };

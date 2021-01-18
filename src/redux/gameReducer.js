@@ -72,66 +72,18 @@ const initState = {
     ],
   },
   scoreDashboard: [
-    {
-      value: 1000000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 500000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 250000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 125000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 64000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 32000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 16000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 8000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 4000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 2000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 1000,
-      isActive: false,
-      isPassed: false,
-    },
-    {
-      value: 500,
-      isActive: true,
-      isPassed: false,
-    },
+    1000000,
+    500000,
+    250000,
+    125000,
+    64000,
+    32000,
+    16000,
+    8000,
+    4000,
+    2000,
+    1000,
+    500,
   ],
 
   gameQuestions: [],
@@ -171,9 +123,9 @@ const gameReducer = (state = initState, action) => {
         isGameConfigDataLoaded: true,
       };
     case INCREASE_SCORE: {
-      const scoreIndex = state.scoreDashboard.findIndex((score) => score.value === state.score);
+      const scoreIndex = state.scoreDashboard.findIndex((scoreValue) => scoreValue === state.score);
       const nextScoreIndex = scoreIndex - 1;
-      const nextScoreValue = state.scoreDashboard[nextScoreIndex].value;
+      const nextScoreValue = state.scoreDashboard[nextScoreIndex];
       return {
         ...state,
         score: nextScoreValue,

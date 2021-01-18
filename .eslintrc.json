@@ -29,6 +29,7 @@
         "jsx-a11y/click-events-have-key-events": "off",
         "no-shadow": "off",
         "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-        "no-param-reassign": ["error", { "props": false }]
+        "no-param-reassign": ["error", { "props": false }],
+        "no-unused-vars": "off"
     }
 }
