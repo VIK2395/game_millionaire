@@ -1,12 +1,12 @@
 import React from 'react';
 
-const ScoreCell = ({ score }) => {
+const ScoreCell = ({ value, isActive, isPassed }) => {
   const classes = ['score-cell'];
 
-  if (score.isActive) {
+  if (isActive) {
     classes.push('active');
   }
-  if (score.isPassed) {
+  if (isPassed) {
     classes.push('passed');
   }
 
@@ -37,7 +37,7 @@ const ScoreCell = ({ score }) => {
           fill="#1C1C21"
           fontWeight="400"
         >
-          ${score.value.toLocaleString('en-US')}
+          ${value.toLocaleString('en-US')}
         </text>
       </svg>
     </li>
