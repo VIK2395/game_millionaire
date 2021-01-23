@@ -94,10 +94,10 @@ const StartPage = ({
   );
 };
 
-const mapStateToProps = ({ isInGame, isInGameEnd, loadError }) => ({
-  isInGame,
-  isInGameEnd,
-  loadError,
+const mapStateToProps = (state) => ({
+  isInGame: state.redirect.isInGame,
+  isInGameEnd: state.redirect.isInGameEnd,
+  loadError: state.loadError,
 });
 
 export default connect(mapStateToProps, {

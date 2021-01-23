@@ -1,26 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { withRouter } from 'react-router-dom';
-import { checkAnswer } from '../../redux/gameActions';
+import { checkAnswerAndOn } from '../../redux/gameActions';
 import AnswerCell from './AnswerCell';
 
-const AnswersList = ({ answers, checkAnswer }) => (
-  <div className="content__answers">
+const AnswersList = ({ setIsDisabled, answers, checkAnswerAndOn, isCorrectAnswerShown }) => {
+  useEffect(() => {
+    setIsDisabled(false);
+  }, [answers, setIsDisabled]);
+
+  return (
     <ul className="content__answers-list">
       {answers.map((answer, index) => (
-        <AnswerCell key={answer.answerId} answer={answer} index={index} checkAnswer={checkAnswer} />
+        <AnswerCell
+          key={answer.answerId}
+          index={index}
+          answer={answer}
+          isCorrectAndShown={answer.isCorrect && isCorrectAnswerShown}
+          setIsDisabled={setIsDisabled}
+          checkAnswerAndOn={checkAnswerAndOn}
+        />
       ))}
     </ul>
-  </div>
-);
+  );
+};
 
 const mapStateToProps = (state) => ({
   answers: state.question.answers,
+  isCorrectAnswerShown: state.question.isCorrectAnswerShown,
 });
 
-const mapDispatchToProps = (dispatch, { history }) => ({
-  checkAnswer: (answerId) => dispatch(checkAnswer(answerId, history)),
-});
-
-export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(AnswersList);
+export default connect(mapStateToProps, { checkAnswerAndOn })(React.memo(AnswersList));

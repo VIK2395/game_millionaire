@@ -6,9 +6,9 @@ import GamePage from './components/gamePage/GamePage';
 import EndPage from './components/endPage/EndPage';
 import Loader from './components/common/loader/Loader';
 
-function App({ isGameConfigDataLoaded }) {
+function App({ isLoadingGameConfigData }) {
   return (
-    <Loader isActive={!isGameConfigDataLoaded}>
+    <Loader isActive={isLoadingGameConfigData}>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={StartPage} />
@@ -20,8 +20,8 @@ function App({ isGameConfigDataLoaded }) {
   );
 }
 
-const mapStateToProps = ({ isGameConfigDataLoaded }) => ({
-  isGameConfigDataLoaded,
+const mapStateToProps = ({ isLoadingGameConfigData }) => ({
+  isLoadingGameConfigData,
 });
 
 export default connect(mapStateToProps)(App);

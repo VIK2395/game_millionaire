@@ -12,21 +12,21 @@ import {
   SET_IS_IN_GAME_START,
   SET_LOAD_ERROR,
   SET_SCORE_QUESTION,
-  SET_SELECTED_AND_DISABLED,
-  SHOW_CORRECT_ANSWER,
-  SET_IS_LOADED,
-  UPDATE_SCORE_DASHBOARD,
+  SET_IS_LOADING_GAME_CONFIG_DATA,
+  SET_IS_CORRECT_ANSWER_SHOWN,
 } from './actionTypes';
 
 import shuffle from '../utils/shuffle';
 
 const initState = {
-  isInitLoad: true,
-  isGameConfigDataLoaded: false,
+  redirect: {
+    isInitLoad: true,
+    isInGameStart: true,
+    isInGame: false,
+    isInGameEnd: false,
+  },
+  isLoadingGameConfigData: true,
   loadError: {},
-  isInGameStart: true,
-  isInGame: false,
-  isInGameEnd: false,
   score: 500,
   earned: 0,
   answer: {
@@ -35,39 +35,28 @@ const initState = {
     isCorrect: false,
   },
   question: {
+    isCorrectAnswerShown: false,
     questionText: "Just init question. Dude, don't you know what you do?",
     answers: [
       {
         answerId: 'sfjhk',
         answerText: 'Just init answer_01',
         isCorrect: true,
-        isSelected: false,
-        isDisabled: false,
-        isShown: false,
       },
       {
         answerId: 'sdjfhkkj',
         answerText: 'Just init answer_02',
         isCorrect: false,
-        isSelected: false,
-        isDisabled: false,
-        // isShown?: false,
       },
       {
         answerId: 'sduhkuhk',
         answerText: 'Just init answer_03',
         isCorrect: false,
-        isSelected: false,
-        isDisabled: false,
-        // isShown: false,
       },
       {
         answerId: 'sdfkhhk',
         answerText: 'Just init answer_04',
         isCorrect: false,
-        isSelected: false,
-        isDisabled: false,
-        // isShown: false,
       },
     ],
   },
@@ -117,10 +106,10 @@ const gameReducer = (state = initState, action) => {
           };
         }),
       };
-    case SET_IS_LOADED:
+    case SET_IS_LOADING_GAME_CONFIG_DATA:
       return {
         ...state,
-        isGameConfigDataLoaded: true,
+        isLoadingGameConfigData: action.payload,
       };
     case INCREASE_SCORE: {
       const scoreIndex = state.scoreDashboard.findIndex((scoreValue) => scoreValue === state.score);
@@ -137,7 +126,10 @@ const gameReducer = (state = initState, action) => {
       );
       return {
         ...state,
-        question,
+        question: {
+          ...question,
+          isCorrectAnswerShown: false,
+        },
       };
     }
     case SET_ANSWER: {
@@ -147,76 +139,15 @@ const gameReducer = (state = initState, action) => {
         answer,
       };
     }
-    case SET_SELECTED_AND_DISABLED:
-      return {
-        ...state,
-        question: {
-          ...state.question,
-          answers: state.question.answers.map((answer) => {
-            if (answer.answerId === state.answer.answerId) {
-              return {
-                ...answer,
-                isSelected: true,
-                isDisabled: true,
-              };
-            }
-            return {
-              ...answer,
-              isDisabled: true,
-            };
-          }),
-        },
-      };
-    case SHOW_CORRECT_ANSWER:
-      return {
-        ...state,
-        question: {
-          ...state.question,
-          answers: state.question.answers.map((answer) => {
-            if (answer.isCorrect) {
-              return {
-                ...answer,
-                isShown: true,
-              };
-            }
-            return answer;
-          }),
-        },
-      };
     case SET_EARNED:
       return {
         ...state,
         earned: action.payload,
       };
-    case UPDATE_SCORE_DASHBOARD:
-      return {
-        ...state,
-        scoreDashboard: state.scoreDashboard.map((score) => {
-          if (score.value < state.score) {
-            return {
-              ...score,
-              isActive: false,
-              isPassed: true,
-            };
-          }
-          if (score.value === state.score) {
-            return {
-              ...score,
-              isActive: true,
-              isPassed: false,
-            };
-          }
-          return {
-            ...score,
-            isActive: false,
-            isPassed: false,
-          };
-        }),
-      };
     case RESET_SCORE:
       return {
         ...state,
-        score: 500,
+        score: state.scoreDashboard[state.scoreDashboard.length - 1],
       };
     case RESET_EARNED:
       return {
@@ -226,27 +157,47 @@ const gameReducer = (state = initState, action) => {
     case SET_IS_INIT_LOAD:
       return {
         ...state,
-        isInitLoad: action.payload,
+        redirect: {
+          ...state.redirect,
+          isInitLoad: action.payload,
+        },
       };
     case SET_IS_IN_GAME:
       return {
         ...state,
-        isInGame: action.payload,
+        redirect: {
+          ...state.redirect,
+          isInGame: action.payload,
+        },
       };
     case SET_IS_IN_GAME_END:
       return {
         ...state,
-        isInGameEnd: action.payload,
+        redirect: {
+          ...state.redirect,
+          isInGameEnd: action.payload,
+        },
       };
     case SET_IS_IN_GAME_START:
       return {
         ...state,
-        isInGameStart: action.payload,
+        redirect: {
+          ...state.redirect,
+          isInGameStart: action.payload,
+        },
       };
     case SET_LOAD_ERROR:
       return {
         ...state,
         loadError: action.payload,
+      };
+    case SET_IS_CORRECT_ANSWER_SHOWN:
+      return {
+        ...state,
+        question: {
+          ...state.question,
+          isCorrectAnswerShown: action.payload,
+        },
       };
     default:
       return state;

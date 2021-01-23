@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const AnswerCell = ({ answer, index, checkAnswer }) => {
+const AnswerCell = ({ answer, index, checkAnswerAndOn, setIsDisabled, isCorrectAndShown }) => {
+  const [isSelected, setIsSelected] = useState(false);
+
   const classes = ['answer-cell'];
 
-  if (answer.isSelected) {
+  if (isSelected) {
     classes.push('selected');
   }
-  if (answer.isDisabled) {
-    classes.push('disabled');
-  }
-  if (answer.isShown) {
+
+  if (isCorrectAndShown) {
     classes.push('correct');
   }
+
+  const onAnswerClicked = (answerId) => {
+    setIsDisabled(true);
+    setIsSelected(true);
+    checkAnswerAndOn(answerId);
+  };
 
   return (
     <li className="answer__cell">
@@ -26,7 +32,7 @@ const AnswerCell = ({ answer, index, checkAnswer }) => {
         <path
           className="answer-cell__body"
           tabIndex="-1"
-          onClick={() => checkAnswer(answer.answerId)}
+          onClick={() => onAnswerClicked(answer.answerId)}
           d="M32.8175 5.31576C34.9762 2.29361 38.4615 0.5 42.1754 0.5H277.825C281.539 0.5 285.024 2.29361 287.183 5.31576L303.386 28L287.183 50.6842C285.024 53.7064 281.539 55.5 277.825 55.5H42.1754C38.4615 55.5 34.9762 53.7064 32.8175 50.6842L16.6145 28L32.8175 5.31576Z"
           fill="white"
           stroke="#D0D0D8"

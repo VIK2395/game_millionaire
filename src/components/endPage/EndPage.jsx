@@ -76,11 +76,11 @@ const EndPage = ({
   );
 };
 
-const mapStateToProps = ({ earned, isInitLoad, isInGameStart, isInGame }) => ({
-  earned,
-  isInitLoad,
-  isInGameStart,
-  isInGame,
+const mapStateToProps = (state) => ({
+  earned: state.earned,
+  isInitLoad: state.redirect.isInitLoad,
+  isInGameStart: state.redirect.isInGameStart,
+  isInGame: state.redirect.isInGame,
 });
 
 export default connect(mapStateToProps, {

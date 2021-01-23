@@ -20,4 +20,4 @@ const mapStateToProps = ({ scoreDashboard, score }) => ({
   score,
 });
 
-export default connect(mapStateToProps)(ScoreList);
+export default connect(mapStateToProps)(React.memo(ScoreList));

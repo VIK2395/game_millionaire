@@ -14,10 +14,8 @@ import {
   SET_IS_IN_GAME_START,
   SET_LOAD_ERROR,
   SET_SCORE_QUESTION,
-  SET_SELECTED_AND_DISABLED,
-  SHOW_CORRECT_ANSWER,
-  SET_IS_LOADED,
-  UPDATE_SCORE_DASHBOARD,
+  SET_IS_LOADING_GAME_CONFIG_DATA,
+  SET_IS_CORRECT_ANSWER_SHOWN,
 } from './actionTypes';
 
 export const setLoadError = (error) => ({
@@ -50,8 +48,8 @@ export const setGameConfigData = (data) => ({
   payload: data,
 });
 
-export const setIsLoaded = (to) => ({
-  type: SET_IS_LOADED,
+export const setIsLoadingGameConfigData = (to) => ({
+  type: SET_IS_LOADING_GAME_CONFIG_DATA,
   payload: to,
 });
 
@@ -84,7 +82,7 @@ export const fetchGameConfigData = () => (dispatch) => {
       dispatch(setGameConfigData(gameConfigData));
     })
     .finally(() => {
-      dispatch(setIsLoaded(true));
+      dispatch(setIsLoadingGameConfigData(false));
     })
     .catch((error) => {
       dispatch(setLoadError(error));
@@ -108,21 +106,9 @@ export const setAnswer = (answerId) => ({
   payload: answerId,
 });
 
-export const setSelectedAndDisabled = () => ({
-  type: SET_SELECTED_AND_DISABLED,
-});
-
-export const showCorrectAnswer = () => ({
-  type: SHOW_CORRECT_ANSWER,
-});
-
 export const setEarned = (value) => ({
   type: SET_EARNED,
   payload: value,
-});
-
-export const updateScoreDashboard = () => ({
-  type: UPDATE_SCORE_DASHBOARD,
 });
 
 export const resetScore = () => ({
@@ -133,29 +119,29 @@ export const resetEarned = () => ({
   type: RESET_EARNED,
 });
 
-export const checkAnswer = (answerId, history) => (dispatch, getState) => {
+export const setIsCorrectAnswerShown = (to) => ({
+  type: SET_IS_CORRECT_ANSWER_SHOWN,
+  payload: to,
+});
+
+export const checkAnswerAndOn = (answerId) => (dispatch, getState) => {
   dispatch(setAnswer(answerId));
-  dispatch(setSelectedAndDisabled());
   setTimeout(() => {
+    dispatch(setIsCorrectAnswerShown(true));
     const state = getState();
     if (state.answer.isCorrect) {
-      dispatch(showCorrectAnswer());
       dispatch(setEarned(state.score));
       setTimeout(() => {
-        if (state.score === 1000000) {
-          history.push('/gameover');
-          dispatch(setIsInGame(false));
-          dispatch(setIsInGameEnd(true));
-        } else {
+        if (state.score !== state.scoreDashboard[0]) {
           dispatch(increaseScore());
           dispatch(setScoreQuestion());
-          // dispatch(updateScoreDashboard());
+        } else {
+          dispatch(setIsInGame(false));
+          dispatch(setIsInGameEnd(true));
         }
       }, 2000);
     } else {
-      dispatch(showCorrectAnswer());
       setTimeout(() => {
-        history.push('/gameover');
         dispatch(setIsInGame(false));
         dispatch(setIsInGameEnd(true));
       }, 3000);
@@ -167,6 +153,5 @@ export const resetGameData = () => (dispatch) => {
   dispatch(formGameQuestions());
   dispatch(resetScore());
   dispatch(setScoreQuestion());
-  // dispatch(updateScoreDashboard());
   dispatch(resetEarned());
 };

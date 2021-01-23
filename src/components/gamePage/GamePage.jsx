@@ -3,9 +3,9 @@ import { Redirect } from 'react-router-dom';
 import './GamePage.css';
 import { connect } from 'react-redux';
 import ScoreList from './ScoreList';
-import AnswersList from './AnswersList';
+import AnswersListContainer from './AnswersListContainer';
 
-const GamePage = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => {
+const GamePage = ({ questionText, isInitLoad, isInGameEnd, isInGameStart }) => {
   const [isActive, setActiveClass] = useState(false);
 
   const toggleActiveClass = () => {
@@ -31,9 +31,9 @@ const GamePage = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => {
 
       <section className="content">
         <div className="content__question">
-          <p>{question.questionText}</p>
+          <p>{questionText}</p>
         </div>
-        <AnswersList />
+        <AnswersListContainer />
       </section>
 
       <section className={`score ${isActive ? 'active' : ''}`}>
@@ -43,11 +43,11 @@ const GamePage = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => {
   );
 };
 
-const mapStateToProps = ({ question, isInitLoad, isInGameEnd, isInGameStart }) => ({
-  question,
-  isInitLoad,
-  isInGameEnd,
-  isInGameStart,
+const mapStateToProps = (state) => ({
+  questionText: state.question.questionText,
+  isInitLoad: state.redirect.isInitLoad,
+  isInGameEnd: state.redirect.isInGameEnd,
+  isInGameStart: state.redirect.isInGameStart,
 });
 
 export default connect(mapStateToProps)(GamePage);
